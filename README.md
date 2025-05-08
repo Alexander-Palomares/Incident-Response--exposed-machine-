@@ -38,6 +38,11 @@ DeviceLogonEvents
 | summarize Attempts = count() by RemoteIP
 | order by Attempts desc
 ```
+
+### Results
+
+![image](https://github.com/user-attachments/assets/67746c14-f8f7-481a-845a-fd01977cccf1)
+
 ---
 
 ## 📊 3. Data Analysis
@@ -56,7 +61,30 @@ DeviceLogonEvents
 | where LogonType == "Network"
 | where ActionType == "LogonSuccess"
 | where RemoteIP has_any(RemoteIPsInQuestion)
+
+// Failed Logins (700)
+DeviceLogonEvents
+| where DeviceName == "windows-target-1"
+| where LogonType == "Network"
+| where ActionType == "LogonFailed"
+| summarize count()
+
+// successful Logins (0)
+DeviceLogonEvents
+| where DeviceName == "windows-target-1"
+| where LogonType == "Network"
+| where ActionType == "LogonSuccess"
+| summarize count()
+
 ```
+
+### Results
+
+![image](https://github.com/user-attachments/assets/d676fb1a-0ae8-4572-a4e8-9dab0af86ea6)
+
+| Failed Logins |  Successful Logins |
+|---------------|--------------------|
+| ![image](https://github.com/user-attachments/assets/c558e5c4-daed-470f-a50f-9b7353291e9b) |![image](https://github.com/user-attachments/assets/6b868872-4fd3-4020-bbe3-3e3cb8b1cffd) |
 
 ---
 
